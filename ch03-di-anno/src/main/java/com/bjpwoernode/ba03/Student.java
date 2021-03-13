@@ -1,0 +1,77 @@
+package com.bjpwoernode.ba03;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+
+/**
+ * @Component: 创建对象，等同于<bean>的功能
+ *     属性：value：表示对象的名称，也就是bean的id
+ *     value的值是唯一的，创建的对象在整个spring容器中就一个
+ *
+ * 位置:在类的上方
+ *
+ * @Component(value = "myStudent")等同于:
+ *   <bean id="myStudent" class="com.bjpowernode.ba01.Student" />
+ *
+ *   spring中和@Component功能一致的，创建对象的注解还有：
+ *     1、@Repository（用在持久层上面）：放在dao的实现类上面，表示创建dao对象，
+ *                                   dao对象是能访问数据库的
+ *     2、@Service（用在业务类上面的）：放在service的实现类上面，
+ *                                  创建service对象，service对象做业务处理，可以有事务等功能
+ *     3、@Controller（用在控制器的上面）：放在控制器（处理器）类的上面，创建控制器对象的
+ *                                     控制器对象，能够接收用户提交的参数，显示请求的处理结果
+ *     以上三个注解的使用语法和@Component一样的，都能创建对象，但是这三个注解还有额外的功能
+ *
+ *     @Repository、@Service、@Controller是给项目对象分层的。
+ *
+ */
+
+@Component("myStudent")
+public class Student {
+
+    /**
+     * @Value:简单类型赋值
+     *    属性：value 是String类型的，表示简单类型的属性值
+     *    位置：1、在属性定义的上面，无需set方法，推荐使用
+     *         2、在set方法上面
+     */
+
+    @Value(value = "张飞")
+    private String name;
+    @Value(value = "20")
+    private Integer age;
+
+    /**
+     * 引用类型
+     * @Autowired: spring框架提供的注解，实现引用类型的赋值
+     * spring中通过注解给引用类型赋值，使用的是自动注入原理
+     * @Autowired: 默认使用的是btType自动注入。
+     *    位置：1、在属性定义的上面，无需set方法
+     *         2、在set方法上面
+     */
+    @Autowired
+    private School school;
+
+    public Student() {
+        System.out.println("Student的无参构造");
+    }
+
+   /* public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }*/
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", school=" + school +
+                '}';
+    }
+}

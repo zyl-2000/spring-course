@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<!--
+     引用类型自动注入：spring根据某些规则可以给引用类型赋值，不用再给引用类型赋值
+         使用规则常用的是byName，byType，
+       1、byName（按名称注入）：java类中引用类型的属性名和spring容器中（配置文件）<bean>的id一样，
+                             且数据类型是一样的，这样的容器中的bean，spring能赋值给引用类型
+
+          语法：
+            <bean id="xx" class="yyyy" autowire="byType" >
+               简单类型赋值属性
+            </bean>
+
+       2、byType（按类型注入）：Java类中引用数据类型和spring容器中<bean>的class属性
+                             是同源关系的，这样的bean能够赋值给引用类型
+          同源就是一类的意思：
+            1、java类中引用类型的数据类型和bean的class的值是一样的
+            2、java类中引用类型的数据类型和bean的class的值是父子关系
+            3、java类中引用类型的数据类型和bean的class的值是接口和实现类的关系
+         语法：
+            <bean id="xx" class="yyyy" autowire="byType" >
+               简单类型赋值属性
+            </bean>
+
+-->
+    <bean id="myStudent" class="com.bjpowernode.ba04.Student" autowire="byName" >
+        <property name="age" value="20" />
+        <property name="name" value="张三" />
+    </bean>
+
+    <bean id="myStudent2" class="com.bjpowernode.ba04.Student">
+        <constructor-arg index="0" name="name" value="李四" />
+        <constructor-arg index="1" name="age" value="21" />
+        <constructor-arg index="2" name="school" ref="school" />
+    </bean>
+
+    <bean id="school" class="com.bjpowernode.ba04.School">
+        <property name="name" value="bjpn" />
+        <property name="address" value="bj" />
+    </bean>
+
+
+</beans>
